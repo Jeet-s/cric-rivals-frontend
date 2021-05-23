@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,56 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif !important;
+  width: 100vw;
+  height: 100vh;
+  background: url("/assets/pg-bg.jpg") no-repeat;
+  background-size: cover;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 24px;
+  padding: 16px 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(202, 1, 1);
+  border-radius: 10px;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blue-color {
+  color: rgb(17, 30, 108);
+}
+
+.button {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 4px 12px;
+  border-radius: 8px;
+}

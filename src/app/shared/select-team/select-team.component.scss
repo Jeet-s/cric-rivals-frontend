@@ -1,0 +1,36 @@
+.base {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+    circle,
+    darken(dodgerblue, 10%),
+    #1f4f96,
+    #1b2949,
+    #000
+  );
+
+  .team {
+    height: calc(50vh - 92px);
+    border: 2px solid white;
+    padding: 4px;
+    margin: 16px;
+    border-radius: 8px;
+
+    .logo {
+      height: 100%;
+      width: auto;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+
+  .selected-team {
+    background-color: rgba($color: #fff, $alpha: 0.3);
+  }
+
+  .heading {
+    color: white;
+    font-size: 16px;
+  }
+}

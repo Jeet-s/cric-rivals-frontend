@@ -1,0 +1,26 @@
+<div class="base" fxLayout="column" fxLayoutAlign="space-between stretch">
+  <div class="heading">Select Team</div>
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between center"
+    *ngIf="teamsList$ | async as teamsList"
+  >
+    <div
+      fxFlex="0 1 calc(25% - 16px)"
+      class="team"
+      *ngFor="let team of teamsList"
+      (click)="selectedTeam = team._id"
+      [ngClass]="{ 'selected-team': selectedTeam == team._id }"
+    >
+      <div
+        class="logo"
+        [ngStyle]="{ 'background-image': 'url(' + team.logo + ')' }"
+      ></div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end">
+    <ion-button class="button" (click)="continue()" [disabled]="!selectedTeam"
+      >continue</ion-button
+    >
+  </div>
+</div>

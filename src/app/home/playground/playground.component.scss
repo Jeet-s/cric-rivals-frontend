@@ -1,0 +1,285 @@
+.play-ground {
+  background: url("/assets/pg-bg.jpg") no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .my-score-card-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 230px;
+    height: 42px;
+    background-color: rgb(17, 30, 108); // 17, 30, 108
+    padding: 12px;
+    padding-bottom: 4px;
+
+    .score {
+      color: white;
+      font-size: 32px;
+    }
+
+    .over {
+      color: white;
+      font-size: 24px;
+    }
+
+    .over-scores {
+      div {
+        border: 2px solid white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .my-over-card-container {
+    position: absolute;
+    top: 42px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    background-color: white; // 17, 30, 108
+    padding: 12px;
+    padding-top: 4px;
+    clip-path: polygon(100% 0, 180px 100%, 0 100%, 0 0);
+
+    .over-scores {
+      div {
+        background-color: white;
+        border: 2px solid black;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 21px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .opp-score-card-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 230px;
+    height: 42px;
+    background-color: rgb(197, 43, 43); // 17, 30, 108
+    padding: 12px;
+    padding-bottom: 4px;
+
+    .score {
+      color: white;
+      font-size: 32px;
+    }
+
+    .over {
+      color: white;
+      font-size: 24px;
+    }
+
+    .over-scores {
+      div {
+        border: 2px solid white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .opp-over-card-container {
+    position: absolute;
+    top: 42px;
+    right: 0px;
+    width: 200px;
+    height: 30px;
+    background-color: white; // 17, 30, 108
+    padding: 12px;
+    padding-top: 4px;
+    clip-path: polygon(100% 0, 100% 100%, 20px 100%, 0 0);
+
+    .over-scores {
+      div {
+        background-color: white;
+        border: 2px solid black;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 21px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .play-area {
+    position: relative;
+    z-index: 999;
+    top: 60%;
+    left: 50%;
+    width: 100vw;
+    max-width: 420px;
+    height: 260px;
+    transform: translate(-50%, -50%);
+
+    .ground {
+      position: absolute;
+      border-radius: 40%;
+      bottom: 0px;
+      height: 100px;
+      width: 100%;
+      z-index: -9999;
+      .batsman {
+        position: absolute;
+        height: 100px;
+        width: 40%;
+        left: 20px;
+        bottom: 50px;
+        z-index: 99;
+        background: url(/assets/batsman.png) no-repeat;
+      }
+      .bowler {
+        position: absolute;
+        background: url(/assets/bowler1.png) no-repeat right;
+        height: 100px;
+        width: 40%;
+        right: 0px;
+        bottom: 50px;
+        z-index: 99;
+      }
+      .pitch {
+        position: absolute;
+        overflow: visible;
+        bottom: 35px;
+        width: calc(100% + 20px);
+        left: -10px;
+        height: 40px;
+        background-color: rgb(255, 233, 203);
+        clip-path: polygon(7% 0%, 93% 0%, 100% 100%, 0% 100%);
+      }
+      .length-indicator {
+        position: absolute;
+        height: 3px;
+        width: 16px;
+        border-radius: 50%;
+        bottom: 50px;
+        z-index: 99;
+        border: 3px solid rgb(0, 255, 42);
+      }
+    }
+    .ball {
+      top: 33px;
+      right: 84px;
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      background-color: rgb(0, 0, 0);
+      border-radius: 50%;
+    }
+  }
+
+  .bat-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.4;
+  }
+
+  .lastBallScore {
+    position: absolute;
+    font-size: 110px;
+    width: 100%;
+    top: 50%;
+    text-align: center;
+    color: #fff;
+
+    font-weight: 900;
+    z-index: 9999;
+  }
+
+  .timming-scale-container {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 230px;
+    height: 8px;
+    top: 10px;
+    background-color: skyblue;
+    border-radius: 6px;
+
+    .timming-pointer {
+      height: 8px;
+      width: 10px;
+      position: absolute;
+      top: 8px;
+      border: 1px solid;
+      background-color: black;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      z-index: 1;
+    }
+
+    .timming-range {
+      height: 8px;
+      position: absolute;
+      background-color: yellowgreen;
+      display: inline-block;
+      top: 0;
+    }
+  }
+
+  .bat-ball-names {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw);
+    height: 30px;
+
+    .bat-name,
+    .ball-name {
+      height: 100%;
+      color: white;
+      padding: 8px 15px;
+      font-size: 16px;
+    }
+
+    .bat-name {
+      background-color: rgb(17, 30, 108);
+      clip-path: polygon(120px 0, 100% 20px, 100% 100%, 0 100%, 0 0);
+      text-align: start;
+      padding-right: 30px;
+    }
+
+    .ball-name {
+      background-color: rgb(197, 43, 43);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 20px, 40px 0);
+      text-align: end;
+      padding-left: 30px;
+    }
+  }
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: rgb(17, 30, 108);
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: rgb(197, 43, 43);
+}
+
+::ng-deep .mat-progress-bar {
+  height: 10px !important;
+}

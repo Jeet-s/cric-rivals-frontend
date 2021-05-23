@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://infinite-thicket-62717.herokuapp.com',
+  // baseUrl: 'http://localhost:3000',
 };
 
 /*

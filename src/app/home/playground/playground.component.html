@@ -1,0 +1,91 @@
+<div class="play-ground">
+  <div class="my-score-card-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="score">
+      <div>{{ totalScore }} / {{ totalWickets }}</div>
+      <span class="over">{{ currentOver - 1 }}.{{ currentBall }} (5)</span>
+    </div>
+  </div>
+  <div class="my-over-card-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div fxLayout="row" fxLayoutGap="8px" class="over-scores">
+        <div *ngFor="let score of currentOverScores">
+          {{ score }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="opp-score-card-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="score">
+      <div>
+        {{ opponentScoreState.totalScore }} / {{ opponentScoreState.wickets }}
+      </div>
+      <span class="over"
+        >{{ opponentScoreState.currentOver - 1 }}.{{
+          opponentScoreState.currentBall
+        }}
+        (5)</span
+      >
+    </div>
+  </div>
+  <div class="opp-over-card-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end">
+      <div fxLayout="row" fxLayoutGap="8px" class="over-scores">
+        <div *ngFor="let score of opponentScoreState.currentOverScores">
+          {{ score }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="play-area" #playArea>
+    <div class="ground">
+      <div class="pitch"></div>
+      <div
+        class="batsman"
+        *ngIf="!isInningOver"
+        [@swingBat]="isBatSwing ? 'swing' : 'initial'"
+      ></div>
+      <div
+        class="bowler"
+        *ngIf="!isInningOver"
+        [@bowl]="isBowled ? 'bowl' : 'initial'"
+      ></div>
+      <div
+        *ngIf="!isInningOver"
+        class="length-indicator"
+        [ngStyle]="{ left: getLengthIndicatorPosition() + 'px' }"
+      ></div>
+    </div>
+  </div>
+  <div class="lastBallScore">{{ lastBallScore }}</div>
+  <div class="timming-scale-container">
+    <div
+      class="timming-pointer"
+      *ngIf="timmingValue != 230"
+      [ngStyle]="{
+        left: 230 - (timmingValue > 230 ? 230 : timmingValue) + 'px'
+      }"
+    ></div>
+    <div
+      *ngFor="let range of timmingRanges"
+      class="timming-range"
+      [ngStyle]="{
+        left: range.start + 'px',
+        right: range.end + 'px',
+        'background-color': range.color
+      }"
+    ></div>
+  </div>
+
+  <div class="bat-ball-names" fxLayout="row" fxLayoutAlign="start end">
+    <div class="bat-name truncate" fxFlex="160px">
+      {{ currentBatsman?.name }}
+    </div>
+    <mat-progress-bar fxFlex [value]="batBallBarValue"></mat-progress-bar>
+    <div class="ball-name truncate" fxFlex="160px">
+      {{ currentBowler?.name }}
+    </div>
+  </div>
+
+  <div class="bat-button" color="accent" (click)="swingBat()"></div>
+</div>

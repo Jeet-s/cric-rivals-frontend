@@ -1,0 +1,27 @@
+<div class="base">
+  <div
+    class="create-room-container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="16px"
+  >
+    <mat-form-field appearance="outline">
+      <input
+        type="number"
+        matInput
+        placeholder="Room ID"
+        [formControl]="roomId"
+      />
+      <mat-hint>Enter a four digit number</mat-hint>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <ion-button (click)="createGame()" [disabled]="roomId.invalid">
+        Create Game
+      </ion-button>
+      <ion-button (click)="joinGame()" [disabled]="roomId.invalid">
+        Join Game
+      </ion-button>
+    </div>
+  </div>
+</div>

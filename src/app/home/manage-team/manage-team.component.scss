@@ -1,0 +1,87 @@
+.base {
+  width: 100vw;
+  height: 100vh;
+  background: url("/assets/main-bg.jpg") no-repeat;
+  background-position: center 80%;
+  background-size: cover;
+  padding: 12px 8px;
+
+  .header,
+  .footer {
+    height: 44px;
+  }
+
+  .team-container {
+    height: calc(100vh - 120px);
+    width: 100vw;
+    background-color: rgba(256, 256, 256, 0.8);
+    position: relative;
+    left: 50%;
+    top: 0px;
+    transform: translateX(-50%);
+    padding: 0px 8px;
+
+    .select-team {
+      // height: 180px;
+    }
+
+    .team {
+      height: 180px;
+      .arrow-left,
+      .arrow-right {
+        text-align: center;
+        line-height: 180px;
+        font-size: 34px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.selected-team {
+  width: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
+
+.selected-team-small {
+  height: 50px;
+  width: 75px !important;
+}
+.squad-container {
+  height: 100%;
+}
+.squad {
+  overflow: auto;
+}
+
+.player {
+  padding: 4px 16px;
+  box-sizing: border-box;
+  cursor: move;
+  font-size: 12px;
+  margin-bottom: 2px;
+  height: calc((100vh - 50px) / 11);
+
+  .oversea,
+  .rating {
+    mat-icon {
+      vertical-align: middle;
+    }
+  }
+
+  .rating {
+    mat-icon {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
+.player-header {
+  padding-right: 26px;
+  padding-top: 0px;
+  padding-bottom: 2px;
+  height: 14px;
+}

@@ -1,27 +1,27 @@
-#container {
-  text-align: center;
-
+.start-button {
   position: absolute;
-  left: 0;
-  right: 0;
+  transform: translate(-50%, -50%);
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  background: url(/assets/start-logo.png) rgba(256, 256, 256, 0.6) no-repeat
+    center;
+  background-size: 50%;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.manage-team-button {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  top: 100%;
+  left: 50%;
+  font-weight: bold;
+  color: cadetblue;
+  background: white;
+  font-size: 32px;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.base {
+  width: 100vw;
+  height: 100vh;
+  background: url("/assets/main-bg.jpg") no-repeat center;
+  background-size: cover;
 }

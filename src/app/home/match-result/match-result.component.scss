@@ -1,0 +1,17 @@
+.base {
+  width: 100vw;
+  height: 100vh;
+  padding: 24px 16px;
+  background: radial-gradient(
+    circle,
+    darken(dodgerblue, 10%),
+    #1f4f96,
+    #1b2949,
+    #000
+  );
+  .result {
+    color: white;
+    font-size: 48px;
+    text-align: center;
+  }
+}
