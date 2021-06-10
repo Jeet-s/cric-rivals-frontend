@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PlaygroundComponent } from './playground/playground.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatchResultComponent } from './match-result/match-result.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatchResultComponent } from './match-result/match-result.component';
     MatInputModule,
     MatSnackBarModule,
     MatProgressBarModule,
+    MatMenuModule,
   ],
   declarations: [
     HomePage,

@@ -27,6 +27,7 @@ export class StartGameComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.socketService.connect();
     this.socketService.socket.on('error', (error) => {
       this.roomId.enable();
       this._snackBar.open(error, null, {
@@ -53,7 +54,6 @@ export class StartGameComponent implements OnInit {
       userId: this.authService.user._id,
     });
     this.roomId.disable();
-    this.roomId.setValue(null);
     this.waitingSnackbar = this._snackBar.open('Waiting for Opponrnt...');
   }
 

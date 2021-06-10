@@ -83,9 +83,10 @@ export class PlaygroundComponent
   };
 
   currentOver: number = 1;
-  currentBall: number = 0;
+  currentBall: number = 1;
 
   bowlingInterval;
+  opponentBowlingInterval;
 
   totalScore: number = 0;
   totalWickets: number = 0;
@@ -95,6 +96,8 @@ export class PlaygroundComponent
   batBallBarValue: number = 0;
 
   waitingSnackbar: MatSnackBarRef<any>;
+
+  isSinglePlayer: boolean = true;
 
   constructor(
     private socketService: SocketService,
@@ -110,14 +113,15 @@ export class PlaygroundComponent
       }
     });
 
-    this.socketService.socket.on(
-      'update-score',
-      (score: OpponentScoreState) => {
-        this.opponentScoreState = score;
-        console.log('on socket update-score');
-        this.checkIsMatchOver();
-      }
-    );
+    if (!this.isSinglePlayer) {
+      this.socketService.socket.on(
+        'update-score',
+        (score: OpponentScoreState) => {
+          this.opponentScoreState = score;
+          this.checkIsMatchOver();
+        }
+      );
+    }
   }
 
   ngOnInit() {
@@ -158,12 +162,12 @@ export class PlaygroundComponent
         this.updateDifficulty();
 
         this.updateScore();
+        this.updateOpponentScore();
       }
     );
   }
 
   updateScore() {
-    console.log('update-score');
     let score: OpponentScoreState = {
       currentBall: this.currentBall,
       currentOver: this.currentOver,
@@ -171,10 +175,143 @@ export class PlaygroundComponent
       totalScore: this.totalScore,
       wickets: this.totalWickets,
     };
-    this.socketService.socket.emit('send-score', {
-      roomId: this.socketService.roomId,
-      score,
-    });
+
+    if (!this.isSinglePlayer) {
+      this.socketService.socket.emit('send-score', {
+        roomId: this.socketService.roomId,
+        score,
+      });
+    }
+
+    if (this.totalWickets == 10) {
+      this.isInningOver = true;
+      clearInterval(this.bowlingInterval);
+      this.startOpponentBowlingInterval();
+      this.checkIsMatchOver();
+      return;
+    }
+  }
+
+  startOpponentBowlingInterval() {
+    if (this.isInningOver && !this.opponentBowlingInterval) {
+      this.opponentBowlingInterval = setInterval(() => {
+        if (this.opponentScoreState.totalScore > this.totalScore) {
+          let matchResult: MatchResult = {
+            myScore: this.totalScore,
+            myTeam: this.myTeam,
+            opponentScore: this.opponentScoreState.totalScore,
+            opponentTeam: this.opponentTeam,
+          };
+          this.router.navigateByUrl('/home/match-result', {
+            state: { matchResult },
+          });
+          clearInterval(this.opponentBowlingInterval);
+          this.waitingSnackbar?.dismiss();
+        }
+
+        if (this.opponentScoreState.currentBall == 6) {
+          this.opponentScoreState.currentOverScores = [];
+          if (this.currentOver == 5) {
+            clearInterval(this.opponentBowlingInterval);
+            this.checkIsMatchOver();
+          } else {
+            this.currentOver++;
+            this.currentBall = 1;
+          }
+        } else {
+          this.currentBall++;
+        }
+        this.updateOpponentScore();
+      }, 2000);
+    }
+  }
+
+  updateOpponentScore() {
+    if (!this.opponentScoreState) {
+      this.opponentScoreState = {
+        currentBall: this.currentBall,
+        currentOver: this.currentOver,
+        currentOverScores: this.currentOverScores,
+        totalScore: this.totalScore,
+        wickets: this.totalWickets,
+      };
+    }
+
+    this.opponentScoreState.currentBall = this.currentBall;
+    this.opponentScoreState.currentOver = this.currentOver;
+    this.calculateOpponentScore(Math.floor(Math.random() * (90 - 0 + 1) + 0));
+    this.checkIsMatchOver();
+  }
+
+  calculateOpponentScore(timming: number) {
+    if (
+      timming <= this.oneRunTime.offset + this.oneRunTime.time ||
+      timming > 230 - this.oneRunTime.offset - this.oneRunTime.time
+    ) {
+      this.opponentScoreState.currentOverScores[
+        this.opponentScoreState.currentBall - 1
+      ] = '1';
+      this.opponentScoreState.totalScore++;
+    } else if (
+      timming <= this.twoRunTime.offset + this.twoRunTime.time ||
+      timming > 230 - this.twoRunTime.offset - this.twoRunTime.time
+    ) {
+      if (
+        this.currentBowler.bowlerSpeed == BowlerSpeedEnum.Slow &&
+        timming > 230 - this.threeRunTime.offset - this.threeRunTime.time
+      ) {
+        this.opponentScoreState.wickets++;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = 'W';
+      } else {
+        this.opponentScoreState.totalScore += 2;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = '2';
+      }
+    } else if (
+      timming <= this.threeRunTime.offset + this.threeRunTime.time ||
+      timming > 230 - this.threeRunTime.offset - this.threeRunTime.time
+    ) {
+      if (timming > 230 - this.threeRunTime.offset - this.threeRunTime.time) {
+        this.opponentScoreState.wickets++;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = 'W';
+      } else {
+        this.opponentScoreState.totalScore += 3;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = '3';
+      }
+    } else if (
+      timming <= this.fourRunTime.offset + this.fourRunTime.time ||
+      timming > 230 - this.fourRunTime.offset - this.fourRunTime.time
+    ) {
+      if (
+        this.currentBowler.bowlerSpeed == BowlerSpeedEnum.Slow &&
+        timming > 230 - this.threeRunTime.offset - this.threeRunTime.time
+      ) {
+        this.opponentScoreState.wickets++;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = 'W';
+      } else {
+        this.opponentScoreState.totalScore += 4;
+        this.opponentScoreState.currentOverScores[
+          this.opponentScoreState.currentBall - 1
+        ] = '4';
+      }
+    } else if (
+      timming <= this.sixRunTime.offset + this.sixRunTime.time &&
+      timming > 230 - this.sixRunTime.offset - this.sixRunTime.time
+    ) {
+      this.opponentScoreState.currentOverScores[
+        this.opponentScoreState.currentBall - 1
+      ] = '6';
+      this.opponentScoreState.totalScore += 6;
+    }
   }
 
   updateDifficulty() {
@@ -215,10 +352,6 @@ export class PlaygroundComponent
   getNextBatsman(): BattingOptionsModel {
     let availableBatsmen = this.allBattingOptions.filter((x) => !x.hasBatted);
     if (availableBatsmen.length <= 1) {
-      this.isInningOver = true;
-      clearInterval(this.bowlingInterval);
-      console.log('CLEARED INTERVAL');
-      // this.checkIsMatchOver();
       return;
     }
     let nextBatsman = availableBatsmen[0];
@@ -274,14 +407,21 @@ export class PlaygroundComponent
 
     let self = this;
     this.bowlingInterval = setInterval(() => {
+      let ballForceConfig = new BallForceModel(this.currentBowler.bowlerSpeed);
+      this.currentBallLength = ballForceConfig.ballLength;
+
+      if (!self.isInningOver) self.bowl(ballForceConfig);
+
       if (this.currentBall == 6) {
         this.currentOverScores = [];
+        if (this.isSinglePlayer) {
+          this.opponentScoreState.currentOverScores = [];
+        }
         if (this.currentOver == 5) {
-          console.log(this.currentOver, this.currentBall);
           this.isInningOver = true;
           clearInterval(this.bowlingInterval);
           this.checkIsMatchOver();
-          self.updateScore();
+          this.updateScore();
         } else {
           this.currentOver++;
           this.currentBall = 1;
@@ -292,13 +432,9 @@ export class PlaygroundComponent
       } else {
         this.currentBall++;
       }
-
-      let ballForceConfig = new BallForceModel(this.currentBowler.bowlerSpeed);
-      this.currentBallLength = ballForceConfig.ballLength;
-
-      if (!self.isInningOver) self.bowl(ballForceConfig);
-
-      console.log('Bowling interval call');
+      if (this.isSinglePlayer) {
+        this.updateOpponentScore();
+      }
     }, 3000);
   }
 
@@ -317,9 +453,6 @@ export class PlaygroundComponent
         self.lastBallScore = 'Bowled';
         self.currentOverScores[self.currentBall - 1] = 'W';
         self.totalWickets++;
-        if (self.totalWickets == 10) {
-          self.checkIsMatchOver();
-        }
         self.currentBatsman = self.getNextBatsman() || self.currentBatsman;
         if (self.currentBowler && self.currentBatsman) self.updateDifficulty();
       }
@@ -332,7 +465,7 @@ export class PlaygroundComponent
       ) {
         self.hitBall();
       }
-      console.log('collision call');
+
       self.updateScore();
     });
   }
@@ -438,7 +571,6 @@ export class PlaygroundComponent
 
     matter.Body.setVelocity(self.ball.body, velocityVector);
 
-    this.checkIsMatchOver();
     self.updateScore();
   }
 
@@ -458,6 +590,11 @@ export class PlaygroundComponent
     setTimeout(() => {
       this.ball.bowl(this.currentBowler.bowlerSpeed, ballForceConfig);
       this.isBowled = false;
+
+      console.log('Check', this.isInningOver);
+      console.log('ball', this.currentBall);
+      console.log('over', this.currentOver);
+      console.log('wicket', this.totalWickets);
     }, 500);
   }
 
@@ -503,19 +640,6 @@ export class PlaygroundComponent
   }
 
   checkIsMatchOver() {
-    console.log(
-      '--------------------------------------------------------------------'
-    );
-    console.log(this.totalWickets, this.currentOver, this.currentBall);
-    console.log(
-      this.opponentScoreState.wickets,
-      this.opponentScoreState.currentOver,
-      this.opponentScoreState.currentBall
-    );
-    console.log(
-      '--------------------------------------------------------------------'
-    );
-
     if (
       this.totalWickets == 10 ||
       (this.currentOver == 5 && this.currentBall == 6)
@@ -526,9 +650,11 @@ export class PlaygroundComponent
           this.opponentScoreState.currentBall == 6)
       ) {
         this.lastBallScore = 'Match Over';
-        this.socketService.socket.emit('match-over', {
-          roomId: this.socketService.roomId,
-        });
+        if (!this.isSinglePlayer) {
+          this.socketService.socket.emit('match-over', {
+            roomId: this.socketService.roomId,
+          });
+        }
         let matchResult: MatchResult = {
           myScore: this.totalScore,
           myTeam: this.myTeam,
@@ -547,3 +673,5 @@ export class PlaygroundComponent
     }
   }
 }
+
+//continue opponent innings when users over are over in single playe

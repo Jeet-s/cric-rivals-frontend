@@ -27,6 +27,7 @@ import { AuthPageModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +50,7 @@ import { AuthInterceptor } from './auth/services/auth.interceptor';
     HttpClientModule,
     AuthPageModule,
     SharedModule,
+    NgxSpinnerModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

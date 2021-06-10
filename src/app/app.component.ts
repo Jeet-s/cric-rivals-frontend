@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
     });
 
     this.loadingService.shouldLoad().subscribe((res) => {
+      console.log('Loading Res', res);
       if (res) {
         this.spinner.show();
       } else {
@@ -48,10 +49,13 @@ export class AppComponent implements OnInit {
   // Shows and hides the loading spinner during RouterEvent changes
   navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
+      console.log('Navigation Start');
       this.loadingService.startLoading();
     }
     if (event instanceof NavigationEnd) {
-      this.loadingService.startLoading();
+      console.log('Navigation End');
+
+      this.loadingService.stopLoading();
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails

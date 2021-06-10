@@ -235,10 +235,10 @@
     </div>
   </div>
   <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-    <ion-button [routerLink]="['/']">home</ion-button>
-    <ion-button *ngIf="!isEditMode" (click)="isEditMode = true"
-      >edit</ion-button
-    >
-    <ion-button *ngIf="isEditMode" (click)="saveTeam()">save</ion-button>
+    <button class="button" [routerLink]="['/']">home</button>
+    <button class="button" *ngIf="!isEditMode" (click)="isEditMode = true">
+      edit
+    </button>
+    <button class="button" *ngIf="isEditMode" (click)="saveTeam()">save</button>
   </div>
 </div>

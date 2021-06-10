@@ -117,4 +117,12 @@ export class AuthService {
       user: this.user,
     };
   }
+
+  logout() {
+    Plugins.Storage.remove({
+      key: 'authDataCric',
+    });
+
+    this.router.navigate(['/auth']);
+  }
 }

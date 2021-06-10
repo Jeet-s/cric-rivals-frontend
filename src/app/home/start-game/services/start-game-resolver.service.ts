@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
+  Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -13,17 +14,25 @@ import { SocketService } from '../../services/socket.service';
   providedIn: 'root',
 })
 export class StartGameResolverService implements Resolve<any> {
+  isSinglePlayer: boolean = false;
+  opponentTeamId: string;
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
-    private socketService: SocketService
-  ) {}
+    private socketService: SocketService,
+    private router: Router
+  ) {
+    this.isSinglePlayer =
+      this.router.getCurrentNavigation().extras.state.isSinglePlayer;
+    this.opponentTeamId =
+      this.router.getCurrentNavigation().extras.state.opponentTeamId;
+  }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return forkJoin({
       myTeam: this.apiService.getUserTeamSquad(this.authService.user._id),
-      opponentTeam: this.apiService.getUserTeamSquad(
-        this.socketService.opponentUserId
-      ),
+      opponentTeam: this.isSinglePlayer
+        ? this.apiService.getTeamSquad(this.opponentTeamId)
+        : this.apiService.getUserTeamSquad(this.socketService.opponentUserId),
     });
   }
 }

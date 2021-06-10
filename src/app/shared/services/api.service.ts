@@ -20,4 +20,8 @@ export class ApiService {
   getUserTeamSquad(userId: string): Observable<Team> {
     return this.http.get<Team>(this.baseUrl + `teams/user/${userId}`);
   }
+
+  getTeamSquad(teamId: string): Observable<Team> {
+    return this.http.get<Team>(this.baseUrl + `teams/${teamId}`);
+  }
 }

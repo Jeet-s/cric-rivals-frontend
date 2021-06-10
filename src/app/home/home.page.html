@@ -1,18 +1,31 @@
 <div class="base">
+  <div class="user" [matMenuTriggerFor]="menu">
+    <img [src]="authService.user.image" alt="user" />
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="authService.logout()">Log out</button>
+  </mat-menu>
   <button
-    [@start]="isStarted ? 'start' : 'initial'"
     class="start-button"
     mat-raised-button
     color="accent"
     (click)="start()"
   ></button>
   <button
-    [@manageTeam]="isManageTeamClicked ? 'start' : 'initial'"
     class="manage-team-button"
     mat-raised-button
     color="accent"
     (click)="manageTeam()"
   >
     Manage Team
+  </button>
+
+  <button
+    class="sp-button"
+    mat-raised-button
+    color="accent"
+    (click)="startSinglePlayer()"
+  >
+    Single Player
   </button>
 </div>

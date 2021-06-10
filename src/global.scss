@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+$primary-theme: #007fff;
+
 html,
 body {
   height: 100%;
@@ -76,4 +78,14 @@ body {
   border: 2px solid white;
   padding: 4px 12px;
   border-radius: 8px;
+}
+
+.button {
+  border: 2px solid $primary-theme;
+  color: $primary-theme;
+  background-color: rgba(209, 209, 209, 0.9);
+  padding: 4px 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 14px;
 }
