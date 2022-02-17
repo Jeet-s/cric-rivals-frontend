@@ -23,9 +23,9 @@ export class StartGameResolverService implements Resolve<any> {
     private router: Router
   ) {
     this.isSinglePlayer =
-      this.router.getCurrentNavigation().extras.state.isSinglePlayer;
+      this.router.getCurrentNavigation().extras.state?.isSinglePlayer;
     this.opponentTeamId =
-      this.router.getCurrentNavigation().extras.state.opponentTeamId;
+      this.router.getCurrentNavigation().extras.state?.opponentTeamId;
   }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return forkJoin({

@@ -12,9 +12,14 @@
     max-width: 820px;
     max-height: 420px;
     background-color: rgba(256, 256, 256, 0.8);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
     input {
       text-align: center;
+      color: black;
     }
 
     /* Chrome, Safari, Edge, Opera */

@@ -48,9 +48,18 @@ export class HomePage {
       return;
     }
 
+    // setTimeout(() => {
+    //   self.router.navigate(['/home/match-teams']);
+    //   this.isStarted = false;
+    // }, 300);
+
     setTimeout(() => {
-      self.router.navigate(['/home/match-teams']);
-      this.isStarted = false;
+      this.router.navigate(['/home/playground'], {
+        state: {
+          isSinglePlayer: true,
+          opponentTeamId: '6096fc610550fa17946ef271',
+        },
+      });
     }, 300);
   }
 

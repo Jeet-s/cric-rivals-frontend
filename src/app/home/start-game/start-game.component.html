@@ -16,12 +16,12 @@
     </mat-form-field>
 
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-      <ion-button (click)="createGame()" [disabled]="roomId.invalid">
+      <button class="button" (click)="createGame()" [disabled]="roomId.invalid">
         Create Game
-      </ion-button>
-      <ion-button (click)="joinGame()" [disabled]="roomId.invalid">
+      </button>
+      <button class="button" (click)="joinGame()" [disabled]="roomId.invalid">
         Join Game
-      </ion-button>
+      </button>
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@
   }
 
   .team-container {
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
     width: 100vw;
     background-color: rgba(256, 256, 256, 0.8);
     position: relative;
@@ -51,6 +51,7 @@
 }
 .squad-container {
   height: 100%;
+  color: black !important;
 }
 .squad {
   overflow: auto;
@@ -62,7 +63,8 @@
   cursor: move;
   font-size: 12px;
   margin-bottom: 2px;
-  height: calc((100vh - 50px) / 11);
+  height: 40px;
+  line-height: 40px;
 
   .oversea,
   .rating {
