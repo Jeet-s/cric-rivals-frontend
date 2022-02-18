@@ -9,9 +9,12 @@
     #1b2949,
     #000
   );
+  display: grid;
+  justify-content: center;
+  align-items: center;
   .result {
     color: white;
-    font-size: 48px;
+    font-size: 72px;
     text-align: center;
   }
 }

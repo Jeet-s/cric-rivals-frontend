@@ -20,7 +20,7 @@ export class ManageTeamComponent implements OnInit {
 
   squad: Player[];
 
-  isEditMode: boolean = true;
+  isEditMode: boolean = false;
 
   focusedInXi: Player;
   focusedInSquad: Player;
@@ -50,6 +50,8 @@ export class ManageTeamComponent implements OnInit {
         this.selectedTeam = this.allTeams.find(
           (x) => x._id == window.history.state?.team
         );
+
+        this.saveTeam();
       }
 
       console.log(this.selectedTeam);

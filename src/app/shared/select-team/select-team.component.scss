@@ -8,6 +8,7 @@
     #1b2949,
     #000
   );
+  padding: 24px;
 
   .team {
     height: calc(50vh - 92px);
@@ -31,6 +32,7 @@
 
   .heading {
     color: white;
-    font-size: 16px;
+    font-size: 48px;
+    text-align: center;
   }
 }

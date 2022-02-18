@@ -24,5 +24,9 @@ export class MatchResultComponent implements OnInit {
     } else {
       this.resultText = 'Match Tied';
     }
+
+    setTimeout(() => {
+      this.router.navigate(['/']), 5000;
+    });
   }
 }
